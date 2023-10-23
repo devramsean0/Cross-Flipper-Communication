@@ -61,7 +61,7 @@ void app_scene_select_mode_on_enter(void* context) {
     App* app = context;
     Widget* widget = app->widget;
     widget_reset(widget);
-    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Place Holder.");
+    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Placeholder.");
     widget_add_button_element(
         widget, GuiButtonTypeCenter, "OK", app_scene_select_mode_button_callback, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewWidget);
@@ -87,7 +87,7 @@ void app_scene_subghz_select_frequency_on_enter(void* context) {
     App* app = context;
     Widget* widget = app->widget;
     widget_reset(widget);
-    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Place Holder.");
+    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Place Holder.", "PG 2");
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewWidget);
 };
 bool app_scene_subghz_select_frequency_on_event(void* context, SceneManagerEvent event) {
