@@ -1,0 +1,18 @@
+# For details & more options, see documentation/AppManifests.md in firmware repo
+
+App(
+    appid="cross_flipper_communication",  # Must be unique
+    name="Cross flipper communication",  # Displayed in menus
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="cross_flipper_communication_app",
+    stack_size=2 * 1024,
+    fap_category="Tools",
+    requires=["gui", "subghz"],
+    # Optional values
+    # fap_version="0.1",
+    fap_icon="cross_flipper_communication.png",  # 10x10 1-bit PNG
+    # fap_description="A simple app",
+    # fap_author="J. Doe",
+    # fap_weburl="https://github.com/user/cross_flipper_communication",
+    fap_icon_assets="images",  # Image assets to compile for this application
+)
