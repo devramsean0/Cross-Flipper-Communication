@@ -2,7 +2,7 @@
 
 App(
     appid="cross_flipper_communication",  # Must be unique
-    name="Cross flipper communication",  # Displayed in menus
+    name="Cross Flipper Comms",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="cross_flipper_communication_app",
     stack_size=2 * 1024,
