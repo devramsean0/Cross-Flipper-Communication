@@ -87,7 +87,7 @@ void app_scene_subghz_select_frequency_on_enter(void* context) {
     App* app = context;
     Widget* widget = app->widget;
     widget_reset(widget);
-    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Place Holder.", "PG 2");
+    widget_add_text_scroll_element(widget, 20, 10, 80, 30, "This is a Place Holder. PG2");
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewWidget);
 };
 bool app_scene_subghz_select_frequency_on_event(void* context, SceneManagerEvent event) {
@@ -115,7 +115,7 @@ void (*const app_on_exit_handlers[])(void* context) = {
     app_scene_subghz_select_frequency_on_exit,
 };
 const SceneManagerHandlers app_scene_handlers = {
-    .on_exit_handlers = app_on_enter_handlers,
+    .on_enter_handlers = app_on_enter_handlers,
     .on_event_handlers = app_on_event_handlers,
     .on_exit_handlers = app_on_exit_handlers,
     .scene_num = AppSceneNum,
