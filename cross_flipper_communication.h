@@ -20,6 +20,7 @@ typedef struct {
 // Scenes
 typedef enum {
     AppSceneSelectMode,
+    AppSceneSettings,
     AppSceneSubGHzSelectFrequency,
     AppSceneSubGhzSelectMode,
     AppSceneSubGhzChatLog,
@@ -33,6 +34,7 @@ typedef enum { AppViewTextbox, AppViewWidget, AppViewSubmenu, AppViewTextInput }
 typedef enum {
     AppSubGHzSelectFrequency,
     AppSelectModeSubGhz,
+    AppSelectModeSettings,
     AppSubGHzSelectModeChatLog,
     AppSubGHzSelectModeWriteMessage
 } AppCustomEvents;

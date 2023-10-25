@@ -30,6 +30,10 @@ void app_callbacks_select_mode_menu(void* context, uint32_t index) {
     switch(index) {
     case AppSelectModeSubGhz:
         scene_manager_handle_custom_event(app->scene_manager, AppSelectModeSubGhz);
+        break;
+    case AppSelectModeSettings:
+        scene_manager_handle_custom_event(app->scene_manager, AppSelectModeSettings);
+        break;
     };
 };
 void app_callbacks_subghz_select_frequency_menu(void* context, uint32_t index) {
@@ -39,10 +43,13 @@ void app_callbacks_subghz_select_frequency_menu(void* context, uint32_t index) {
 }
 void app_callbacks_subghz_select_mode_menu(void* context, uint32_t index) {
     App* app = context;
-    if(index == 0) {
+    switch(index) {
+    case AppSubGHzSelectModeChatLog:
         scene_manager_handle_custom_event(app->scene_manager, AppSubGHzSelectModeChatLog);
-    } else if(index == 1) {
+        break;
+    case AppSubGHzSelectModeWriteMessage:
         scene_manager_handle_custom_event(app->scene_manager, AppSubGHzSelectModeWriteMessage);
+        break;
     }
 }
 // Scene Callbacks
@@ -52,6 +59,8 @@ void app_scene_select_mode_on_enter(void* context) {
     submenu_reset(submenu);
     submenu_set_header(submenu, "Select Mode");
     submenu_add_item(submenu, "SubGHz", AppSelectModeSubGhz, app_callbacks_select_mode_menu, app);
+    submenu_add_item(
+        submenu, "Settings", AppSelectModeSettings, app_callbacks_select_mode_menu, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewSubmenu);
 }
 bool app_scene_select_mode_on_event(void* context, SceneManagerEvent event) {
@@ -59,8 +68,13 @@ bool app_scene_select_mode_on_event(void* context, SceneManagerEvent event) {
     bool consumed = false;
     if(event.type == SceneManagerEventTypeCustom) {
         consumed = true;
-        if(event.event == AppSelectModeSubGhz) {
+        switch(event.event) {
+        case AppSelectModeSubGhz:
             scene_manager_next_scene(app->scene_manager, AppSceneSubGHzSelectFrequency);
+            break;
+        case AppSelectModeSettings:
+            scene_manager_next_scene(app->scene_manager, AppSceneSettings);
+            break;
         }
     }
     return consumed;
@@ -70,7 +84,23 @@ void app_scene_select_mode_on_exit(void* context) {
     Submenu* submenu = app->submenu;
     submenu_reset(submenu);
 };
-
+void app_scene_settings_on_enter(void* context) {
+    App* app = (App*)context;
+    Submenu* submenu = app->submenu;
+    submenu_reset(submenu);
+    submenu_set_header(submenu, "Settings");
+    view_dispatcher_switch_to_view(app->view_dispatcher, AppViewSubmenu);
+}
+bool app_scene_settings_on_event(void* context, SceneManagerEvent event) {
+    UNUSED(context);
+    UNUSED(event);
+    return false;
+}
+void app_scene_settings_on_exit(void* context) {
+    App* app = (App*)context;
+    Submenu* submenu = app->submenu;
+    submenu_reset(submenu);
+};
 void app_scene_subghz_select_frequency_on_enter(void* context) {
     App* app = context;
     Submenu* submenu = app->submenu;
@@ -108,8 +138,18 @@ void app_scene_subghz_select_mode_on_enter(void* context) {
     Submenu* submenu = app->submenu;
     submenu_reset(submenu);
     submenu_set_header(submenu, "Select Mode");
-    submenu_add_item(submenu, "Read Chat", 0, app_callbacks_subghz_select_mode_menu, app);
-    submenu_add_item(submenu, "Write A Message", 1, app_callbacks_subghz_select_mode_menu, app);
+    submenu_add_item(
+        submenu,
+        "Read Chat",
+        AppSubGHzSelectModeChatLog,
+        app_callbacks_subghz_select_mode_menu,
+        app);
+    submenu_add_item(
+        submenu,
+        "Write A Message",
+        AppSubGHzSelectModeWriteMessage,
+        app_callbacks_subghz_select_mode_menu,
+        app);
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewSubmenu);
 }
 
@@ -118,10 +158,13 @@ bool app_scene_subghz_select_mode_on_event(void* context, SceneManagerEvent even
     bool consumed = false;
     if(event.type == SceneManagerEventTypeCustom) {
         consumed = true;
-        if(event.event == AppSubGHzSelectModeChatLog) {
+        switch(event.event) {
+        case AppSubGHzSelectModeChatLog:
             scene_manager_next_scene(app->scene_manager, AppSceneSubGhzChatLog);
-        } else if(event.event == AppSubGHzSelectModeWriteMessage) {
+            break;
+        case AppSubGHzSelectModeWriteMessage:
             scene_manager_next_scene(app->scene_manager, AppSceneSubGHzChatBox);
+            break;
         }
     }
     return consumed;
@@ -135,16 +178,19 @@ void app_scene_subghz_select_mode_on_exit(void* context) {
 // Handler Callback Lists
 void (*const app_on_enter_handlers[])(void*) = {
     app_scene_select_mode_on_enter,
+    app_scene_settings_on_enter,
     app_scene_subghz_select_frequency_on_enter,
     app_scene_subghz_select_mode_on_enter,
 };
 bool (*const app_on_event_handlers[])(void* context, SceneManagerEvent event) = {
     app_scene_select_mode_on_event,
+    app_scene_settings_on_event,
     app_scene_subghz_select_frequency_on_event,
     app_scene_subghz_select_mode_on_event,
 };
 void (*const app_on_exit_handlers[])(void* context) = {
     app_scene_select_mode_on_exit,
+    app_scene_settings_on_exit,
     app_scene_subghz_select_frequency_on_exit,
     app_scene_subghz_select_mode_on_exit,
 };
