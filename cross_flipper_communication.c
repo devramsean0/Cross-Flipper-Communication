@@ -24,26 +24,6 @@ int frequenciesSize = 8;
 float frequencies[] =
     {446.00625, 446.01875, 446.03125, 446.04375, 446.05625, 446.06875, 446.08125, 446.09375};
 
-// Scenes
-typedef enum {
-    AppSceneSelectMode,
-    AppSceneSubGHzSelectFrequency,
-    AppSceneSubGhzSelectMode,
-    AppSceneSubGhzChatLog,
-    AppSceneSubGHzChatBox,
-    AppSceneNum
-} appScene;
-// Views
-typedef enum { AppViewTextbox, AppViewWidget, AppViewSubmenu, AppViewTextInput } appViews;
-
-// Custom Event Enums
-typedef enum {
-    AppSubGHzSelectFrequency,
-    AppSelectModeSubGhz,
-    AppSubGHzSelectModeChatLog,
-    AppSubGHzSelectModeWriteMessage
-} AppCustomEvents;
-
 // Menu Callbacks
 void app_callbacks_select_mode_menu(void* context, uint32_t index) {
     App* app = context;
